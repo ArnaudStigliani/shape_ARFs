@@ -1,0 +1,69 @@
+#!/bin/bash
+
+
+results=../results/files
+mkdir -p $results
+negative_set_path=../lib/negative_arnaud/
+genome=../data/tair10.fas
+
+# retrieving region for motif discovery
+
+sed 's/\./,/g' ../data/ARF2_peaks.narrowPeak | sort -k9,9nr -k7,7nr | head -600 | awk 'BEGIN{OFS="\t"}{print $1,$2,$3}' > $results/ARF2_top_regions.bed
+sed 's/\./,/g' ../data/MP_peaks.narrowPeak | sort -k9,9nr -k7,7nr | head -600 | awk 'BEGIN{OFS="\t"}{print $1,$2,$3}' > $results/MP_top_regions.bed
+
+ARF2_fasta=$results/ARF2_top.fasta
+MP_fasta=$results/MP_top.fasta
+
+bedtools getfasta -fi $genome -fo $MP_fasta -bed $results/MP_top_regions.bed
+bedtools getfasta -fi $genome -fo $ARF2_fasta -bed $results/ARF2_top_regions.bed
+
+# bed test files
+
+sed 's/\./,/g' ../data/ARF2_peaks.narrowPeak | sort -k9,9nr -k7,7nr | tail -n +600  | awk -v OFS="\t" '{print $1,$2,$3}' > $results/ARF2_test.bed
+sed 's/\./,/g' ../data/MP_peaks.narrowPeak | sort -k9,9nr -k7,7nr | tail -n +600 | awk -v OFS="\t" '{print $1,$2,$3}' > $results/MP_test.bed
+
+python $negative_set_path/fonctions.py -pos $results/ARF2_test.bed -neg ARF2_test -o $results/ 
+python $negative_set_path/fonctions.py -pos $results/MP_test.bed -neg MP_test -o $results/
+
+# fasta test files 
+
+bedtools getfasta -fi $genome -fo $results/ARF2_test.fas -bed $results/ARF2_test.bed
+bedtools getfasta -fi $genome -fo $results/MP_test.fas -bed $results/MP_test.bed
+
+bedtools getfasta -fi $genome -fo $results/ARF2_test_1_neg.fas -bed $results/ARF2_test_1_neg.bed
+bedtools getfasta -fi $genome -fo $results/MP_test_1_neg.fas -bed $results/MP_test_1_neg.bed
+
+
+# fasta test files 
+
+python scores.py -m ../results/files/pfm_R/ARF2.pfm -f  ../results/files/ARF2_test.fas -o ../results/files  &
+python scores.py -m ../results/files/pfm_R/ARF2.pfm -f  ../results/files/ARF2_test_1_neg.fas -o ../results/files &
+
+python scores.py -m ../results/files/pfm_R/MP.pfm -f  ../results/files/MP_test.fas -o ../results/files &
+python scores.py -m ../results/files/pfm_R/MP.pfm -f  ../results/files/MP_test_1_neg.fas -o ../results/files & 
+
+wait 
+
+
+sed -i "1d" ../results/files/ARF2_test.fas.scores &
+sed -i "1d" ../results/files/MP_test.fas.scores &
+sed -i "1d" ../results/files/ARF2_test_1_neg.fas.scores &
+sed -i "1d" ../results/files/MP_test_1_neg.fas.scores &
+
+wait
+
+paste <(sort -u -k1,1 -k4,4nr $results/ARF2_test.fas.scores | sort -u -k1,1 | awk '{print $4}' ) <(sort -u -k1,1 -k4,4nr $results/ARF2_test_1_neg.fas.scores | sort -u -k1,1 | awk '{print $4}' ) >  $results/tab_scores_ARF2.tsv
+paste <(sort -u -k1,1 -k4,4nr $results/MP_test.fas.scores | sort -u -k1,1 | awk '{print $4}' ) <(sort -u -k1,1 -k4,4nr $results/MP_test_1_neg.fas.scores | sort -u -k1,1 | awk '{print $4}' ) >  $results/tab_scores_MP.tsv
+
+
+
+# Plot ROCs
+
+Rscript plot_ROC.r ../results/files/tab_scores_ARF2.tsv  ../results/files/tab_scores_MP.tsv
+
+# Plot ranks
+
+Rscript plot_rank.r
+
+
+exit 0
