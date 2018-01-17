@@ -3,7 +3,7 @@
 matrix=$1
 name_matrix=$2
 spacing=$3
-header="MATRIX COUNT SYMETRIC $name_matrix SIMPLE\nA\tC\tG\tT"
+header="MATRIX COUNT SYMMETRIC $name_matrix SIMPLE\nA\tC\tG\tT"
 
 
 pfm_mono=$(tail -n +3 $matrix)

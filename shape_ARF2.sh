@@ -29,10 +29,10 @@ path_DNAshape=/home/as248291/Programmes/DNAshapedTFBS
 #     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
 echo "Training a PSSM + DNA shape classifier.";
-time python2.7 $path_DNAshape/DNAshapedTFBS.py trainPSSM -f ../results/files/ER7.jaspar \
+time python2.7 $path_DNAshape/DNAshapedTFBS.py trainPSSM -f ../results/files/ARF2.jaspar \
     -i ../results/files/ARF2_top.fasta -I ../results/files/ARF2_top_regions.bed \
     -b ../results/files/ARF2_top_neg.fasta -B ../results/files/ARF2_top_regions_1_neg.bed \
-    -o ../results/files/DNAshapedPSSM_classifier_ER7 \
+    -o ../results/files/DNAshapedPSSM_classifier_ARF2 \
     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
 
@@ -57,9 +57,9 @@ time python2.7 $path_DNAshape/DNAshapedTFBS.py trainPSSM -f ../results/files/ER7
 #     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
 echo "Applying the trained PSSM + DNA shape classifier on ../results/files sequences.";
-time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files/ER7.jaspar \
+time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files/ARF2.jaspar \
     -i ../results/files/ARF2_test.fas -I ../results/files/ARF2_test.bed \
-    -c ../results/files/DNAshapedPSSM_classifier_ER7.pkl -o ../results/files/DNAshapedPSSM_fg_predictions_ER7.txt \
+    -c ../results/files/DNAshapedPSSM_classifier_ARF2.pkl -o ../results/files/DNAshapedPSSM_fg_predictions_ARF2.txt \
     -v 0 \
     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
@@ -82,9 +82,9 @@ time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files/ER7
 #     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
 echo "Applying the trained PSSM + DNA shape classifier on ../results/files sequences.";
-time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files/ER7.jaspar \
+time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files/ARF2.jaspar \
     -i ../results/files/ARF2_test_1_neg.fas -I ../results/files/ARF2_test_1_neg.bed \
-    -c ../results/files/DNAshapedPSSM_classifier_ER7.pkl -o ../results/files/DNAshapedPSSM_bg_predictions_ER7.txt \
+    -c ../results/files/DNAshapedPSSM_classifier_ARF2.pkl -o ../results/files/DNAshapedPSSM_bg_predictions_ARF2.txt \
     -v 0 \
     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 

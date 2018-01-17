@@ -31,9 +31,11 @@ path_DNAshape=/home/as248291/Programmes/DNAshapedTFBS
 echo "Training a PSSM + DNA shape classifier.";
 time python2.7 $path_DNAshape/DNAshapedTFBS.py trainPSSM -f ../results/files/ER8.jaspar \
     -i ../results/files/ARF2_top.fasta -I ../results/files/ARF2_top_regions.bed \
-    -b ../results/files/ARF2_top.fasta -B ../results/files/ARF2_top_regions.bed \
-    -o DNAshapedPSSM_classifier_ER8 \
+    -b ../results/files/ARF2_top_neg.fasta -B ../results/files/ARF2_top_regions_1_neg.bed \
+    -o ../results/files/DNAshapedPSSM_classifier_ER8 \
     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
+
+
 
 # echo "Training a 4-bits + DNA shape classifier.";
 # time python2.7 ../DNAshapedTFBS.py train4bits -f MA0563.1.pfm \
@@ -57,7 +59,8 @@ time python2.7 $path_DNAshape/DNAshapedTFBS.py trainPSSM -f ../results/files/ER8
 echo "Applying the trained PSSM + DNA shape classifier on ../results/files sequences.";
 time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files/ER8.jaspar \
     -i ../results/files/ARF2_test.fas -I ../results/files/ARF2_test.bed \
-    -c DNAshapedPSSM_classifier_ER8.pkl -o DNAshapedPSSM_fg_predictions_ER8.txt \
+    -c ../results/files/DNAshapedPSSM_classifier_ER8.pkl -o ../results/files/DNAshapedPSSM_fg_predictions_ER8.txt \
+    -v 0 \
     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
 # echo "Applying the trained 4-bits + DNA shape classifier on ../results/files sequences.";
@@ -81,7 +84,8 @@ time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files/ER8
 echo "Applying the trained PSSM + DNA shape classifier on ../results/files sequences.";
 time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files/ER8.jaspar \
     -i ../results/files/ARF2_test_1_neg.fas -I ../results/files/ARF2_test_1_neg.bed \
-    -c DNAshapedPSSM_classifier_ER8.pkl -o DNAshapedPSSM_bg_predictions_ER8.txt \
+    -c ../results/files/DNAshapedPSSM_classifier_ER8.pkl -o ../results/files/DNAshapedPSSM_bg_predictions_ER8.txt \
+    -v 0 \
     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
 # echo "Applying the trained 4-bits + DNA shape classifier on ../results/files sequences.";
