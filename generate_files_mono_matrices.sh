@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-results=../results/files_mono/
+results=../results/files_mono
 mkdir -p $results
 negative_set_path=../lib/negative_arnaud/
 genome=../data/tair10.fas
@@ -158,8 +158,8 @@ paste <(awk '{print $6}' $results/DNAshapedPSSM_fg_predictions_MP.txt) <(awk '{p
 
 #plot ROC
 
-Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_MP.tsv  $results/tab_scores_MP_shape.tsv MP_pfm_vs_shape
-Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_ARF2.tsv  $results/tab_scores_ARF2_shape.tsv ARF2_pfm_vs_shape
+Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_MP.tsv  $results/tab_scores_MP_shape.tsv MP_pfm_vs_shape $results
+Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_ARF2.tsv  $results/tab_scores_ARF2_shape.tsv ARF2_pfm_vs_shape $results
 
 
 

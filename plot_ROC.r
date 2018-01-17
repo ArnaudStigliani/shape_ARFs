@@ -3,6 +3,7 @@ library(Cairo)
 args = commandArgs(trailingOnly=TRUE)
 #args <- c("../results/files/tab_scores_ARF2_ER7.tsv","../results/files/tab_scores_ARF2_ER8.tsv")
 namePlot <- args[3]
+output <- args[4]
 
 arrayName <- c(args[1],args[2])
 
@@ -13,7 +14,7 @@ ARF2_ER8 <- read.table(arrayName[2],sep="\t")
 rocARF2_ER8 <- roc(cases=ARF2_ER8[,1],controls=ARF2_ER8[,2])
 
 
-Cairo(file=paste("../results/files/ROC_",Sys.Date(),"_",namePlot,"_",".png",sep=""),type="png",width=600,height=600,bg='white')
+Cairo(file=paste(output,"/ROC_",Sys.Date(),"_",namePlot,"_",".png",sep=""),type="png",width=600,height=600,bg='white')
 par(xaxs="i",yaxs="i")
 plot(rocARF2_ER7,col="orange",identity=FALSE,xlab="Unbound sequences",ylab="Bound sequences")
 lines(rocARF2_ER8,col="cornflowerblue",legacy.axes=TRUE)
