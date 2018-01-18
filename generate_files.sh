@@ -116,6 +116,6 @@ paste $results/tab_scores_ER7_ARF2_shape.tsv $results/tab_scores_ER8_ARF2_shape.
 
 Rscript plot_ROC.r $results/tab_scores_ER7_ARF2.tsv  $results/tab_scores_ER8_ARF2.tsv pfm $results
 Rscript plot_ROC.r $results/tab_scores_ER7_ARF2_shape.tsv  $results/tab_scores_ER8_ARF2_shape.tsv shape $results
-Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_ARF2.tsv  $results/tab_scores_ARF2_shape.tsv pfm_vs_shape $results
+Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_ARF2.tsv  $results/tab_scores_ARF2_shape.tsv pfm_vs_shape $results ARF2_dimer
 
 exit 0

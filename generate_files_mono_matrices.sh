@@ -8,7 +8,7 @@ genome=../data/tair10.fas
 
 ####################### ARF2 ###############################
 
-sed 's/\./,/g' ../data/ARF2_peaks.narrowPeak | sort -k9,9nr -k7,7nr | head -600 | awk 'BEGIN{OFS="\t"}{print $1,$2+50,$3-50}' > $results/ARF2_top_regions.bed
+sed 's/\./,/g' ../data/ARF2_peaks.narrowPeak | sort -k9,9nr -k7,7nr | head -600 | awk 'BEGIN{OFS="\t"}{print $1,$2,$3}' > $results/ARF2_top_regions.bed
 
 
 python $negative_set_path/fonctions.py -pos $results/ARF2_top_regions.bed -neg ARF2_top_regions -o $results/ 
@@ -34,7 +34,7 @@ cat $bed_train_neg  > $results/ARF2_top_regions_1_neg.bed
 
 # bed test files
 
-sed 's/\./,/g' ../data/ARF2_peaks.narrowPeak | sort -k9,9nr -k7,7nr | tail -n +600  | awk -v OFS="\t" '{print $1,$2+50,$3-50}' > $results/ARF2_test.bed
+sed 's/\./,/g' ../data/ARF2_peaks.narrowPeak | sort -k9,9nr -k7,7nr | tail -n +600  | awk -v OFS="\t" '{print $1,$2,$3}' > $results/ARF2_test.bed
 
 
 python $negative_set_path/fonctions.py -pos $results/ARF2_test.bed -neg ARF2_test -o $results/ 
@@ -60,7 +60,7 @@ cat $bed_neg > $results/ARF2_test_1_neg.bed
 
 ####################### MP ###############################
 
-sed 's/\./,/g' ../data/MP_peaks.narrowPeak | sort -k9,9nr -k7,7nr | head -600 | awk 'BEGIN{OFS="\t"}{print $1,$2+50,$3-50}' > $results/MP_top_regions.bed
+sed 's/\./,/g' ../data/MP_peaks.narrowPeak | sort -k9,9nr -k7,7nr | head -600 | awk 'BEGIN{OFS="\t"}{print $1,$2,$3}' > $results/MP_top_regions.bed
 
 
 python $negative_set_path/fonctions.py -pos $results/MP_top_regions.bed -neg MP_top_regions -o $results/ 
@@ -86,7 +86,7 @@ cat $bed_train_neg  > $results/MP_top_regions_1_neg.bed
 
 # bed test files
 
-sed 's/\./,/g' ../data/MP_peaks.narrowPeak | sort -k9,9nr -k7,7nr | tail -n +600  | awk -v OFS="\t" '{print $1,$2+50,$3-50}' > $results/MP_test.bed
+sed 's/\./,/g' ../data/MP_peaks.narrowPeak | sort -k9,9nr -k7,7nr | tail -n +600  | awk -v OFS="\t" '{print $1,$2,$3}' > $results/MP_test.bed
 
 
 python $negative_set_path/fonctions.py -pos $results/MP_test.bed -neg MP_test -o $results/ 
@@ -158,8 +158,8 @@ paste <(awk '{print $6}' $results/DNAshapedPSSM_fg_predictions_MP.txt) <(awk '{p
 
 #plot ROC
 
-Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_MP.tsv  $results/tab_scores_MP_shape.tsv MP_pfm_vs_shape $results
-Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_ARF2.tsv  $results/tab_scores_ARF2_shape.tsv ARF2_pfm_vs_shape $results
+Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_MP.tsv  $results/tab_scores_MP_shape.tsv MP_pfm_vs_shape $results MP
+Rscript plot_ROC_pfm_vs_shape.r $results/tab_scores_ARF2.tsv  $results/tab_scores_ARF2_shape.tsv ARF2_pfm_vs_shape $results ARF2
 
 
 

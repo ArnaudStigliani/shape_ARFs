@@ -16,22 +16,22 @@ path_DNAshape=/home/as248291/Programmes/DNAshapedTFBS
 
 # echo "Training a first order TFFM + DNA shape classifier.";
 # time python2.7 ../DNAshapedTFBS.py trainTFFM -T TFFM_first_order.xml \
-#     -i ../results/files_mono/ARF2_top.fasta -I ../results/files_mono/ARF2_top_regions.bed \
-#     -b ../results/files_mono/ARF2_top.fasta -B ../results/files_mono/ARF2_top_regions.bed \
+#     -i ../results/files_mono/MP_top.fasta -I ../results/files_mono/MP_top_regions.bed \
+#     -b ../results/files_mono/MP_top.fasta -B ../results/files_mono/MP_top_regions.bed \
 #     -o DNAshapedTFFM_fo_classifier -t first_order \
 #     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
 # echo "Training a detailed TFFM + DNA shape classifier.";
 # time python2.7 ../DNAshapedTFBS.py trainTFFM -T TFFM_detailed.xml \
-#     -i ../results/files_mono/ARF2_top.fasta -I ../results/files_mono/ARF2_top_regions.bed \
-#     -b ../results/files_mono/ARF2_top.fasta -B ../results/files_mono/ARF2_top_regions.bed \
+#     -i ../results/files_mono/MP_top.fasta -I ../results/files_mono/MP_top_regions.bed \
+#     -b ../results/files_mono/MP_top.fasta -B ../results/files_mono/MP_top_regions.bed \
 #     -o DNAshapedTFFM_d_classifier -t detailed \
 #     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
 echo "Training a PSSM + DNA shape classifier.";
 time python2.7 $path_DNAshape/DNAshapedTFBS.py trainPSSM -f ../results/files_mono/MP.jaspar \
-    -i ../results/files_mono/ARF2_top.fasta -I ../results/files_mono/ARF2_top_regions.bed \
-    -b ../results/files_mono/ARF2_top_neg.fasta -B ../results/files_mono/ARF2_top_regions_1_neg.bed \
+    -i ../results/files_mono/MP_top.fasta -I ../results/files_mono/MP_top_regions.bed \
+    -b ../results/files_mono/MP_top_neg.fasta -B ../results/files_mono/MP_top_regions_1_neg.bed \
     -o ../results/files_mono/DNAshapedPSSM_classifier_MP \
     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
@@ -39,8 +39,8 @@ time python2.7 $path_DNAshape/DNAshapedTFBS.py trainPSSM -f ../results/files_mon
 
 # echo "Training a 4-bits + DNA shape classifier.";
 # time python2.7 ../DNAshapedTFBS.py train4bits -f MA0563.1.pfm \
-#     -i ../results/files_mono/ARF2_top.fasta -I ../results/files_mono/ARF2_top_regions.bed \
-#     -b ../results/files_mono/ARF2_top.fasta -B ../results/files_mono/ARF2_top_regions.bed \
+#     -i ../results/files_mono/MP_top.fasta -I ../results/files_mono/MP_top_regions.bed \
+#     -b ../results/files_mono/MP_top.fasta -B ../results/files_mono/MP_top_regions.bed \
 #     -o DNAshaped4bits_classifier \
 #     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
 
@@ -58,7 +58,7 @@ time python2.7 $path_DNAshape/DNAshapedTFBS.py trainPSSM -f ../results/files_mon
 
 echo "Applying the trained PSSM + DNA shape classifier on ../results/files_mono sequences.";
 time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files_mono/MP.jaspar \
-    -i ../results/files_mono/ARF2_test.fas -I ../results/files_mono/ARF2_test.bed \
+    -i ../results/files_mono/MP_test.fas -I ../results/files_mono/MP_test.bed \
     -c ../results/files_mono/DNAshapedPSSM_classifier_MP.pkl -o ../results/files_mono/DNAshapedPSSM_fg_predictions_MP.txt \
     -v 0 \
     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
@@ -83,7 +83,7 @@ time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files_mon
 
 echo "Applying the trained PSSM + DNA shape classifier on ../results/files_mono sequences.";
 time python2.7 $path_DNAshape/DNAshapedTFBS.py applyPSSM -f ../results/files_mono/MP.jaspar \
-    -i ../results/files_mono/ARF2_test_1_neg.fas -I ../results/files_mono/ARF2_test_1_neg.bed \
+    -i ../results/files_mono/MP_test_1_neg.fas -I ../results/files_mono/MP_test_1_neg.bed \
     -c ../results/files_mono/DNAshapedPSSM_classifier_MP.pkl -o ../results/files_mono/DNAshapedPSSM_bg_predictions_MP.txt \
     -v 0 \
     -1 $helt $prot $mgw $roll -2 $helt2 $prot2 $mgw2 $roll2 -n;
